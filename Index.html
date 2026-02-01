@@ -699,7 +699,7 @@
 
         async function loadQuickStats() {
             try {
-                // Pull directly from Myrtle Beach Airport (KMYR) for reliable data
+                // Pull from Myrtle Beach International Airport (KMYR) - closest major airport with full weather reporting
                 const obsResponse = await fetch(`https://api.weather.gov/stations/KMYR/observations/latest`);
                 const obsData = await obsResponse.json();
                 const props = obsData.properties;
@@ -1047,7 +1047,4 @@
             const banner = document.getElementById('alertBanner');
             banner.textContent = alert.message;
             banner.className = 'alert-banner active ' + alert.level;
-        }
-    </script>
-</body>
-</html>
+ 
