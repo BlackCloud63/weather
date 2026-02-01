@@ -699,15 +699,8 @@
 
         async function loadQuickStats() {
             try {
-                const response = await fetch(`https://api.weather.gov/points/${CONFIG.lat},${CONFIG.lon}`);
-                const pointData = await response.json();
-                const stationsUrl = pointData.properties.observationStations;
-                
-                const stationsResponse = await fetch(stationsUrl);
-                const stationsData = await stationsResponse.json();
-                const stationId = stationsData.features[0].id;
-                
-                const obsResponse = await fetch(`${stationId}/observations/latest`);
+                // Pull directly from Myrtle Beach Airport (KMYR) for reliable data
+                const obsResponse = await fetch(`https://api.weather.gov/stations/KMYR/observations/latest`);
                 const obsData = await obsResponse.json();
                 const props = obsData.properties;
                 
@@ -721,6 +714,10 @@
                 document.getElementById('quickWind').textContent = `${windMph} mph`;
             } catch (error) {
                 console.error('Quick stats error:', error);
+                // Fallback display
+                document.getElementById('quickTemp').textContent = '--°';
+                document.getElementById('quickConditions').textContent = '--';
+                document.getElementById('quickWind').textContent = '-- mph';
             }
         }
 
