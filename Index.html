@@ -17,6 +17,8 @@
             --text-dark: #1e293b;
             --text-medium: #64748b;
             --border: #e2e8f0;
+            --temp-high: #ef4444;
+            --temp-low: #3b82f6;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -140,10 +142,14 @@
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 600;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
         }
 
-        .emergency-link:hover { opacity: 0.85; }
+        .emergency-link:hover { 
+            background: #b91c1c;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
 
         .commentary-section {
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
@@ -151,7 +157,7 @@
             border-radius: 12px;
             padding: 2rem 1.5rem;
             margin-bottom: 1.5rem;
-            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            box-shadow: 0 8px 16px rgba(37, 99, 235, 0.3);
         }
 
         .commentary-title {
@@ -250,34 +256,37 @@
         .forecast-card {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 1rem;
+            padding: 0.85rem;
             text-align: center;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .forecast-card:hover { transform: translateY(-2px); }
+        .forecast-card:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
 
         .forecast-day {
             font-weight: 700;
             color: var(--primary-blue);
             margin-bottom: 0.5rem;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .forecast-icon {
-            font-size: 2.25rem;
+            font-size: 2rem;
             margin: 0.25rem 0;
         }
 
         .forecast-temps {
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin: 0.5rem 0;
         }
 
-        .temp-high { color: var(--alert-red); }
-        .temp-low { color: var(--primary-blue); }
+        .temp-high { color: var(--temp-high); }
+        .temp-low { color: var(--temp-low); }
 
         .forecast-desc {
             font-size: 0.85rem;
@@ -300,46 +309,49 @@
             border-radius: 8px;
         }
 
-        .astronomy-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 0.6rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .weather-card {
+        .astronomy-strip {
             background: var(--card-bg);
-            border-radius: 10px;
-            padding: 1rem;
+            border-radius: 8px;
+            padding: 0.85rem 1.25rem;
+            margin-bottom: 1.5rem;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border-left: 4px solid var(--primary-blue);
-            transition: transform 0.2s;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.85rem;
         }
 
-        .weather-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        .astro-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
         }
 
-        .card-label {
-            font-size: 0.75rem;
+        .astro-icon {
+            font-size: 1.25rem;
+        }
+
+        .astro-label {
             font-weight: 600;
             color: var(--text-medium);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 0.4rem;
         }
 
-        .card-value {
-            font-size: 1.5rem;
-            font-weight: 700;
+        .astro-value {
+            font-weight: 600;
             color: var(--text-dark);
-            margin-bottom: 0.2rem;
         }
 
-        .card-detail {
-            font-size: 0.8rem;
-            color: var(--text-medium);
+        .astro-link {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .astro-link:hover {
+            text-decoration: underline;
         }
 
         .admin-toggle {
@@ -486,11 +498,14 @@
             .section-title { font-size: 1.15rem; }
             .station-container { padding: 0.5rem; }
             .station-frame { height: 450px; }
-            .radar-embed { height: 400px; }
+            .radar-embed { height: 350px; }
             .quick-stats { padding: 0.75rem 1rem; }
             .quick-stat-value { font-size: 1.5rem; }
-            .forecast-grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 0.5rem; }
-            .astronomy-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+            .forecast-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.5rem; }
+            .forecast-card { padding: 0.65rem; }
+            .forecast-icon { font-size: 1.75rem; }
+            .forecast-temps { font-size: 0.95rem; }
+            .astro-item { font-size: 0.8rem; }
             .emergency-section { padding: 1rem; }
             .commentary-section { padding: 1.5rem 1.25rem; }
         }
@@ -545,9 +560,9 @@
             <div class="emergency-title">⚡ Power Outage Information</div>
             <div class="emergency-content" id="powerContent">
                 <div class="emergency-links">
-                    <a href="https://outages.horryelectric.com/" target="_blank" class="emergency-link">Horry Electric Outage Map</a>
-                    <a href="https://stormcenter.santeecooper.com/" target="_blank" class="emergency-link">Santee Cooper Outages</a>
-                    <a href="https://www.duke-energy.com/outages" target="_blank" class="emergency-link">Duke Energy Outages</a>
+                    <a href="https://outages.horryelectric.com/" target="_blank" class="emergency-link">⚡ Horry Electric Outage Map</a>
+                    <a href="https://stormcenter.santeecooper.com/" target="_blank" class="emergency-link">🔌 Santee Cooper Outages</a>
+                    <a href="https://www.duke-energy.com/outages" target="_blank" class="emergency-link">💡 Duke Energy Outages</a>
                 </div>
             </div>
         </div>
@@ -556,8 +571,8 @@
             <div class="emergency-title">🌀 National Hurricane Center</div>
             <div class="emergency-content">
                 <div class="emergency-links">
-                    <a href="https://www.nhc.noaa.gov/" target="_blank" class="emergency-link">NHC Tropical Weather</a>
-                    <a href="https://www.nhc.noaa.gov/cyclones/" target="_blank" class="emergency-link">Active Storms</a>
+                    <a href="https://www.nhc.noaa.gov/" target="_blank" class="emergency-link">🌀 NHC Tropical Weather</a>
+                    <a href="https://www.nhc.noaa.gov/cyclones/" target="_blank" class="emergency-link">🌪️ Active Storms</a>
                 </div>
             </div>
         </div>
@@ -566,9 +581,9 @@
             <div class="emergency-title">🚨 Emergency Resources</div>
             <div class="emergency-content">
                 <div class="emergency-links">
-                    <a href="https://www.horrycounty.org/Departments/Emergency-Management" target="_blank" class="emergency-link">Horry County Emergency Management</a>
-                    <a href="https://www.scemd.org/" target="_blank" class="emergency-link">SC Emergency Management</a>
-                    <a href="https://www.weather.gov/ilm/" target="_blank" class="emergency-link">NWS Wilmington</a>
+                    <a href="https://www.horrycounty.org/Departments/Emergency-Management" target="_blank" class="emergency-link">🏛️ Horry County Emergency Management</a>
+                    <a href="https://www.scemd.org/" target="_blank" class="emergency-link">🆘 SC Emergency Management</a>
+                    <a href="https://www.weather.gov/ilm/" target="_blank" class="emergency-link">🌦️ NWS Wilmington</a>
                 </div>
             </div>
         </div>
@@ -604,7 +619,7 @@
 
         <section>
             <h2 class="section-title">Astronomy & Tides</h2>
-            <div id="astronomy" class="astronomy-grid">
+            <div id="astronomy" class="astronomy-strip">
                 <div class="loading">Loading astronomy data...</div>
             </div>
         </section>
@@ -649,6 +664,7 @@
         <footer class="site-footer">
             <p class="last-updated" id="lastUpdated">Last updated: Loading...</p>
             <p>Data from WeatherLink & National Weather Service</p>
+            <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-medium);">Weather analysis is for informational purposes only. Always follow official NWS warnings and local emergency management guidance.</p>
         </footer>
     </div>
 
@@ -888,28 +904,26 @@
                 const moon = getMoonPhase();
 
                 container.innerHTML = `
-                    <div class="weather-card">
-                        <div class="card-label">Sunrise</div>
-                        <div class="card-value" style="font-size: 1.15rem;">☀️</div>
-                        <div class="card-detail">${sunrise}</div>
+                    <div class="astro-item">
+                        <span class="astro-icon">☀️</span>
+                        <span class="astro-label">Sunrise:</span>
+                        <span class="astro-value">${sunrise}</span>
                     </div>
-                    
-                    <div class="weather-card">
-                        <div class="card-label">Sunset</div>
-                        <div class="card-value" style="font-size: 1.15rem;">🌅</div>
-                        <div class="card-detail">${sunset}</div>
+                    <div style="color: var(--border);">|</div>
+                    <div class="astro-item">
+                        <span class="astro-icon">🌅</span>
+                        <span class="astro-label">Sunset:</span>
+                        <span class="astro-value">${sunset}</span>
                     </div>
-                    
-                    <div class="weather-card">
-                        <div class="card-label">Moon Phase</div>
-                        <div class="card-value" style="font-size: 1.15rem;">${moon.icon}</div>
-                        <div class="card-detail">${moon.name}</div>
+                    <div style="color: var(--border);">|</div>
+                    <div class="astro-item">
+                        <span class="astro-icon">${moon.icon}</span>
+                        <span class="astro-value">${moon.name}</span>
                     </div>
-                    
-                    <div class="weather-card">
-                        <div class="card-label">Myrtle Beach Tides</div>
-                        <div class="card-value" style="font-size: 1rem;">🌊</div>
-                        <div class="card-detail"><a href="https://www.tide-forecast.com/locations/Myrtle-Beach-South-Carolina/tides/latest" target="_blank" style="color: var(--primary-blue);">View tide chart →</a></div>
+                    <div style="color: var(--border);">|</div>
+                    <div class="astro-item">
+                        <span class="astro-icon">🌊</span>
+                        <a href="https://www.tide-forecast.com/locations/Myrtle-Beach-South-Carolina/tides/latest" target="_blank" class="astro-link">MB Tides →</a>
                     </div>
                 `;
 
@@ -917,10 +931,14 @@
                 console.error('Astronomy error:', error);
                 const moon = getMoonPhase();
                 container.innerHTML = `
-                    <div class="weather-card">
-                        <div class="card-label">Moon Phase</div>
-                        <div class="card-value" style="font-size: 1.15rem;">${moon.icon}</div>
-                        <div class="card-detail">${moon.name}</div>
+                    <div class="astro-item">
+                        <span class="astro-icon">${moon.icon}</span>
+                        <span class="astro-value">${moon.name}</span>
+                    </div>
+                    <div style="color: var(--border);">|</div>
+                    <div class="astro-item">
+                        <span class="astro-icon">🌊</span>
+                        <a href="https://www.tide-forecast.com/locations/Myrtle-Beach-South-Carolina/tides/latest" target="_blank" class="astro-link">MB Tides →</a>
                     </div>
                 `;
             }
