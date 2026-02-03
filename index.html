@@ -498,7 +498,7 @@
             .section-title { font-size: 1.15rem; }
             .station-container { padding: 0.5rem; }
             .station-frame { height: 450px; }
-            .radar-embed { height: 350px; }
+            .radar-embed { height: 500px; }
             .quick-stats { padding: 0.75rem 1rem; }
             .quick-stat-value { font-size: 1.5rem; }
             .forecast-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.5rem; }
@@ -517,13 +517,11 @@
     <div class="container">
         <section class="commentary-section">
             <h2 class="commentary-title">Local Weather Breakdown - What to Expect</h2>
-            <div class="commentary-author">by Christopher Jenkins</div>
             <div id="commentaryDisplay" class="commentary-display">
                 <div class="commentary-timestamp" id="commentaryTime"></div>
                 <div class="commentary-text" id="commentaryText"></div>
             </div>
             <p class="no-commentary" id="noCommentary">No current weather updates. Check back during active weather events.</p>
-            <button class="share-button" onclick="shareWeather()">📤 Share This Forecast</button>
         </section>
 
         <div class="quick-stats" id="quickStats">
@@ -624,6 +622,13 @@
             </div>
         </section>
 
+        <section style="background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <h2 class="section-title">About This Page</h2>
+            <p style="margin-bottom: 1rem; line-height: 1.8;">This site provides weather analysis for Horry County and the Grand Strand based on global forecast models (GFS, Euro, Canadian) and ensemble data. I synthesize model trends with official National Weather Service and National Hurricane Center forecasts to give you clear, practical insights without the hype.</p>
+            <p style="margin-bottom: 1rem; line-height: 1.8;">My personal weather station contributes data to the National Weather Service and Weather Underground networks.</p>
+            <p style="font-size: 0.9rem; color: var(--text-medium); font-style: italic;">Christopher Jenkins | Amateur Radio Operator (KG4BTT) | SKYWARN Spotter | NHC support during major events | Climatology studies</p>
+        </section>
+
         <div class="admin-toggle">
             <button class="admin-toggle-btn" onclick="toggleAdminPanel()">🔒 Admin Login</button>
         </div>
@@ -655,7 +660,7 @@
 
                 <div class="admin-section">
                     <h4>Weather Commentary</h4>
-                    <textarea id="adminCommentary" class="admin-textarea" placeholder="Your weather update for the community..."></textarea>
+                    <textarea id="adminCommentary" class="admin-textarea" placeholder="Your weather update..."></textarea>
                     <button class="admin-btn" onclick="saveCommentary()">Post Update</button>
                 </div>
             </div>
