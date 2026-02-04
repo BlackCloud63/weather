@@ -224,10 +224,11 @@
             font-family: 'Space Grotesk', sans-serif;
             font-size: 1.35rem;
             font-weight: 700;
-            color: var(--text-dark);
+            color: var(--primary-blue);
             margin-bottom: 1.25rem;
             padding-bottom: 0.5rem;
             border-bottom: 3px solid var(--primary-blue);
+            text-align: center;
         }
 
         .station-container {
@@ -516,7 +517,7 @@
 
     <div class="container">
         <section class="commentary-section">
-            <h2 class="commentary-title">Local Weather Breakdown - What to Expect</h2>
+            <h2 class="commentary-title">Severe Weather Analysis - What to Expect</h2>
             <div id="commentaryDisplay" class="commentary-display">
                 <div class="commentary-timestamp" id="commentaryTime"></div>
                 <div class="commentary-text" id="commentaryText"></div>
@@ -524,26 +525,28 @@
             <p class="no-commentary" id="noCommentary">No current weather updates. Check back during active weather events.</p>
         </section>
 
-        <header class="site-header">
-            <h1 class="site-title">Horry County Weather - Hunters Ridge</h1>
-            <p class="site-subtitle">Live conditions from your neighborhood weather station</p>
-        </header>
-
-        <div class="quick-stats" id="quickStats">
-            <div class="quick-stat">
-                <div class="quick-stat-value" id="quickTemp">--°</div>
-                <div class="quick-stat-label">Temperature</div>
-            </div>
-            <div class="quick-stat">
-                <div class="quick-stat-value" id="quickConditions">--</div>
-                <div class="quick-stat-label">Conditions</div>
-            </div>
-            <div class="quick-stat">
-                <div class="quick-stat-value" id="quickWind">-- mph</div>
-                <div class="quick-stat-label">Wind</div>
-            </div>
+        <div style="text-align: center; font-size: 0.9rem; color: var(--text-medium); padding: 0.75rem 0; margin-bottom: 1rem; border-bottom: 1px solid var(--border);">
+            Horry County Weather Analysis | Christopher Jenkins (KG4BTT)
         </div>
-        <p style="text-align: center; font-size: 0.75rem; color: var(--text-medium); margin-top: -0.5rem; margin-bottom: 1rem;"><em>Data from Myrtle Beach Airport (KMYR)</em></p>
+
+        <div>
+            <h2 class="section-title">Current Conditions - Myrtle Beach Airport</h2>
+            <div class="quick-stats" id="quickStats">
+                <div class="quick-stat">
+                    <div class="quick-stat-value" id="quickTemp">--°</div>
+                    <div class="quick-stat-label">Temperature</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value" id="quickConditions">--</div>
+                    <div class="quick-stat-label">Conditions</div>
+                </div>
+                <div class="quick-stat">
+                    <div class="quick-stat-value" id="quickWind">-- mph</div>
+                    <div class="quick-stat-label">Wind</div>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 0.75rem; color: var(--text-medium); margin-top: -0.5rem; margin-bottom: 1.5rem;"><em>Data from KMYR - updates hourly</em></p>
+        </div>
 
         <div class="emergency-section" id="schoolClosures">
             <div class="emergency-title">🏫 School Closures & Delays</div>
@@ -588,7 +591,7 @@
         </div>
 
         <section>
-            <h2 class="section-title">Current Conditions - Hunters Ridge Station</h2>
+            <h2 class="section-title">Live Station Data - Hunters Ridge</h2>
             <div class="station-container">
                 <iframe 
                     class="station-frame"
