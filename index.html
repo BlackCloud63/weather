@@ -543,6 +543,42 @@
             </div>
         </div>
 
+        <section>
+            <h2 class="section-title">Live Station Data - Hunters Ridge</h2>
+            <div class="station-container">
+                <iframe 
+                    class="station-frame"
+                    src="https://www.weatherlink.com/embeddablePage/show/90df5a38b06c485192fe5dc6bdf5204f/summary"
+                    title="Live Weather Station Data">
+                </iframe>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">5-Day Forecast</h2>
+            <div id="forecast" class="forecast-grid">
+                <div class="loading">Loading forecast...</div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Local Radar</h2>
+            <div class="radar-container">
+                <iframe 
+                    class="radar-embed"
+                    src="https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOnsiaWQiOiJsb2NhbCIsImNlbnRlciI6Wy03OC45NzYsMzMuNzI1XSwibG9jYXRpb24iOm51bGwsInpvb20iOjh9LCJhbmltYXRpbmciOmZhbHNlLCJiYXNlIjoic3RhbmRhcmQiLCJhcnRjYyI6ZmFsc2UsImNvdW50eSI6ZmFsc2UsImN3YSI6ZmFsc2UsInJmYyI6ZmFsc2UsInN0YXRlIjpmYWxzZSwibWVudSI6dHJ1ZSwic2hvcnRGdXNlZE9ubHkiOmZhbHNlLCJvcGFjaXR5Ijp7ImFsZXJ0cyI6MC44LCJsb2NhbCI6MC42LCJsb2NhbFN0YXRpb25zIjowLjgsIm5hdGlvbmFsIjowLjZ9fQ%3D%3D"
+                    title="Local Weather Radar">
+                </iframe>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Astronomy & Tides</h2>
+            <div id="astronomy" class="astronomy-strip">
+                <div class="loading">Loading astronomy data...</div>
+            </div>
+        </section>
+
         <div class="emergency-section" id="schoolClosures">
             <div class="emergency-title">🏫 School Closures & Delays</div>
             <div class="emergency-content" id="schoolContent">Loading school information...</div>
@@ -585,52 +621,12 @@
             </div>
         </div>
 
-        <section>
-            <h2 class="section-title">Live Station Data - Hunters Ridge</h2>
-            <div class="station-container">
-                <iframe 
-                    class="station-frame"
-                    src="https://www.weatherlink.com/embeddablePage/show/90df5a38b06c485192fe5dc6bdf5204f/summary"
-                    title="Live Weather Station Data">
-                </iframe>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="section-title">5-Day Forecast</h2>
-            <div id="forecast" class="forecast-grid">
-                <div class="loading">Loading forecast...</div>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="section-title">Local Radar</h2>
-            <div class="radar-container">
-                <iframe 
-                    class="radar-embed"
-                    src="https://radar.weather.gov/?settings=v1_eyJhZ2VuZGEiOnsiaWQiOiJsb2NhbCIsImNlbnRlciI6Wy03OC45NzYsMzMuNzI1XSwibG9jYXRpb24iOm51bGwsInpvb20iOjh9LCJhbmltYXRpbmciOmZhbHNlLCJiYXNlIjoic3RhbmRhcmQiLCJhcnRjYyI6ZmFsc2UsImNvdW50eSI6ZmFsc2UsImN3YSI6ZmFsc2UsInJmYyI6ZmFsc2UsInN0YXRlIjpmYWxzZSwibWVudSI6dHJ1ZSwic2hvcnRGdXNlZE9ubHkiOmZhbHNlLCJvcGFjaXR5Ijp7ImFsZXJ0cyI6MC44LCJsb2NhbCI6MC42LCJsb2NhbFN0YXRpb25zIjowLjgsIm5hdGlvbmFsIjowLjZ9fQ%3D%3D"
-                    title="Local Weather Radar">
-                </iframe>
-            </div>
-        </section>
-
-        <section>
-            <h2 class="section-title">Astronomy & Tides</h2>
-            <div id="astronomy" class="astronomy-strip">
-                <div class="loading">Loading astronomy data...</div>
-            </div>
-        </section>
-
         <section style="background: white; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
             <h2 class="section-title">About This Page</h2>
             <p style="margin-bottom: 1rem; line-height: 1.8;">This site provides weather analysis for Horry County and the Grand Strand based on global forecast models (GFS, Euro, Canadian) and ensemble data. I synthesize model trends with official National Weather Service and National Hurricane Center forecasts to give you clear, practical insights without the hype.</p>
             <p style="margin-bottom: 1rem; line-height: 1.8;">My personal weather station contributes data to the National Weather Service and Weather Underground networks.</p>
             <p style="font-size: 0.9rem; color: var(--text-medium); font-style: italic;">Christopher Jenkins | Amateur Radio Operator (KG4BTT) | SKYWARN Spotter | NHC support during major events | Climatology studies</p>
         </section>
-
-        <div class="admin-toggle">
-            <button class="admin-toggle-btn" onclick="toggleAdminPanel()">🔒 Admin Login</button>
-        </div>
 
         <div class="admin-panel" id="adminPanel">
             <div id="adminLogin" class="admin-login">
@@ -662,6 +658,20 @@
                     <textarea id="adminCommentary" class="admin-textarea" placeholder="Your weather update..."></textarea>
                     <button class="admin-btn" onclick="saveCommentary()">Post Update</button>
                 </div>
+
+                <div class="admin-section">
+                    <h4>Model Links</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-medium); margin-bottom: 0.75rem;">Quick access to forecast models on Tropical Tidbits</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem;">
+                        <a href="https://www.tropicaltidbits.com/analysis/models/?model=gfs" target="_blank" style="display: block; padding: 0.5rem; background: white; border-radius: 6px; text-decoration: none; color: var(--primary-blue); font-weight: 600; text-align: center; border: 2px solid var(--border); transition: all 0.2s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='var(--border)'">GFS</a>
+                        <a href="https://www.tropicaltidbits.com/analysis/models/?model=ecmwf" target="_blank" style="display: block; padding: 0.5rem; background: white; border-radius: 6px; text-decoration: none; color: var(--primary-blue); font-weight: 600; text-align: center; border: 2px solid var(--border); transition: all 0.2s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='var(--border)'">Euro/ECMWF</a>
+                        <a href="https://www.tropicaltidbits.com/analysis/models/?model=gem" target="_blank" style="display: block; padding: 0.5rem; background: white; border-radius: 6px; text-decoration: none; color: var(--primary-blue); font-weight: 600; text-align: center; border: 2px solid var(--border); transition: all 0.2s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='var(--border)'">Canadian/GEM</a>
+                        <a href="https://www.tropicaltidbits.com/analysis/models/?model=icon" target="_blank" style="display: block; padding: 0.5rem; background: white; border-radius: 6px; text-decoration: none; color: var(--primary-blue); font-weight: 600; text-align: center; border: 2px solid var(--border); transition: all 0.2s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='var(--border)'">ICON</a>
+                        <a href="https://www.tropicaltidbits.com/analysis/models/?model=nam" target="_blank" style="display: block; padding: 0.5rem; background: white; border-radius: 6px; text-decoration: none; color: var(--primary-blue); font-weight: 600; text-align: center; border: 2px solid var(--border); transition: all 0.2s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='var(--border)'">NAM</a>
+                        <a href="https://www.tropicaltidbits.com/analysis/models/?model=gefs" target="_blank" style="display: block; padding: 0.5rem; background: white; border-radius: 6px; text-decoration: none; color: var(--primary-blue); font-weight: 600; text-align: center; border: 2px solid var(--border); transition: all 0.2s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='var(--border)'">GEFS Ensemble</a>
+                        <a href="https://www.tropicaltidbits.com/analysis/models/?model=eps" target="_blank" style="display: block; padding: 0.5rem; background: white; border-radius: 6px; text-decoration: none; color: var(--primary-blue); font-weight: 600; text-align: center; border: 2px solid var(--border); transition: all 0.2s;" onmouseover="this.style.borderColor='var(--primary-blue)'" onmouseout="this.style.borderColor='var(--border)'">EPS Ensemble</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -669,6 +679,7 @@
             <p class="last-updated" id="lastUpdated">Last updated: Loading...</p>
             <p>Data from WeatherLink & National Weather Service</p>
             <p style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-medium);">Weather analysis is for informational purposes only. Always follow official NWS warnings and local emergency management guidance.</p>
+            <p style="margin-top: 1rem;"><a href="#" onclick="toggleAdminPanel(); return false;" style="color: var(--text-medium); text-decoration: none; font-size: 0.75rem;">Admin</a></p>
         </footer>
     </div>
 
