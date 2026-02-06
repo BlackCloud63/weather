@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horry County Weather - Hunters Ridge</title>
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -807,6 +810,7 @@
 
                 if (data.features && data.features.length > 0) {
                     const alert = data.features[0].properties;
+                    const alertUrl = data.features[0].id; // NWS alert URL
                     let level = 'watch';
                     if (alert.severity === 'Extreme' || alert.severity === 'Severe') {
                         level = 'active';
@@ -816,7 +820,8 @@
 
                     displayAlert({
                         level: level,
-                        message: `⚠️ ${alert.event.toUpperCase()} - ${alert.headline}`
+                        message: `⚠️ ${alert.event.toUpperCase()} - ${alert.headline}`,
+                        url: alertUrl
                     });
                 } else {
                     document.getElementById('alertBanner').classList.remove('active');
@@ -1062,8 +1067,18 @@
 
         function displayAlert(alert) {
             const banner = document.getElementById('alertBanner');
-            banner.textContent = alert.message;
             banner.className = 'alert-banner active ' + alert.level;
+            
+            // Make banner clickable if URL provided
+            if (alert.url) {
+                banner.innerHTML = `${alert.message} <span style="font-size: 0.85em; opacity: 0.9;">(tap for full alert)</span>`;
+                banner.style.cursor = 'pointer';
+                banner.onclick = () => window.open(alert.url, '_blank');
+            } else {
+                banner.textContent = alert.message;
+                banner.style.cursor = 'default';
+                banner.onclick = null;
+            }
         }
     </script>
 </body>

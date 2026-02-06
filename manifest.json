@@ -1,0 +1,17 @@
+{
+  "name": "Horry County Weather",
+  "short_name": "HC Weather",
+  "description": "Severe weather analysis for Horry County and the Grand Strand",
+  "start_url": "/weather/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#2563eb",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
