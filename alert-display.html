@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Alerts - Horry County Weather</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #1e3c72;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #666;
+        }
+
+        .loading {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .alert-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 6px solid #ff6b6b;
+        }
+
+        .alert-card.warning {
+            border-left-color: #ffa500;
+        }
+
+        .alert-card.watch {
+            border-left-color: #ffeb3b;
+        }
+
+        .alert-card.advisory {
+            border-left-color: #4CAF50;
+        }
+
+        .alert-card.statement {
+            border-left-color: #2196F3;
+        }
+
+        .alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .alert-event {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e3c72;
+        }
+
+        .alert-severity {
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .alert-severity.moderate {
+            background: #ffa500;
+        }
+
+        .alert-severity.minor {
+            background: #4CAF50;
+        }
+
+        .alert-headline {
+            font-size: 18px;
+            font-weight: 600;
+            color: #d32f2f;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #ffebee;
+            border-radius: 5px;
+        }
+
+        .alert-section {
+            margin-bottom: 20px;
+        }
+
+        .alert-section h3 {
+            color: #1e3c72;
+            margin-bottom: 10px;
+            font-size: 16px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 5px;
+        }
+
+        .alert-section p {
+            line-height: 1.6;
+            color: #333;
+            white-space: pre-wrap;
+        }
+
+        .alert-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .meta-value {
+            font-size: 14px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .no-alerts {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .no-alerts h2 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 6px solid #c62828;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: white;
+            color: #1e3c72;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 600px) {
+            .alert-event {
+                font-size: 20px;
+            }
+            
+            .alert-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚠️ Active Weather Alerts</h1>
+            <p>Horry County, South Carolina</p>
+        </div>
+
+        <div id="alerts-container">
+            <div class="loading">
+                <h2>Loading alerts...</h2>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-button">← Back to Weather Dashboard</a>
+    </div>
+
+    <script>
+        // Function to determine alert severity class
+        function getSeverityClass(severity) {
+            const sev = (severity || '').toLowerCase();
+            if (sev.includes('extreme')) return 'severe';
+            if (sev.includes('severe')) return 'severe';
+            if (sev.includes('moderate')) return 'moderate';
+            return 'minor';
+        }
+
+        // Function to determine alert type class
+        function getAlertTypeClass(event) {
+            const ev = (event || '').toLowerCase();
+            if (ev.includes('warning')) return 'warning';
+            if (ev.includes('watch')) return 'watch';
+            if (ev.includes('advisory')) return 'advisory';
+            return 'statement';
+        }
+
+        // Function to format date/time
+        function formatDateTime(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                timeZoneName: 'short'
+            });
+        }
+
+        // Function to create alert card HTML
+        function createAlertCard(alert) {
+            const props = alert.properties;
+            const alertClass = getAlertTypeClass(props.event);
+            const severityClass = getSeverityClass(props.severity);
+            
+            return `
+                <div class="alert-card ${alertClass}">
+                    <div class="alert-header">
+                        <div class="alert-event">${props.event || 'Weather Alert'}</div>
+                        <div class="alert-severity ${severityClass}">${props.severity || 'Unknown'}</div>
+                    </div>
+
+                    ${props.headline ? `<div class="alert-headline">${props.headline}</div>` : ''}
+
+                    ${props.description ? `
+                        <div class="alert-section">
+                            <h3>Description</h3>
+                            <p>${props.description}</p>
+                        </div>
+                    ` : ''}
+
+                    ${props.instruction ? `
+                        <div class="alert-section">
+                            <h3>Instructions</h3>
+                            <p>${props.instruction}</p>
+                        </div>
+                    ` : ''}
+
+                    <div class="alert-meta">
+                        <div class="meta-item">
+                            <div class="meta-label">Effective</div>
+                            <div class="meta-value">${formatDateTime(props.effective)}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Expires</div>
+                            <div class="meta-value">${formatDateTime(props.expires)}</div>
+                        </div>
+                        <div class="meta-item">
+                            <div class="meta-label">Issued By</div>
+                            <div class="meta-value">${props.senderName || 'NWS'}</div>
+                        </div>
+                        ${props.areaDesc ? `
+                            <div class="meta-item">
+                                <div class="meta-label">Areas Affected</div>
+                                <div class="meta-value">${props.areaDesc}</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Fetch and display alerts
+        async function loadAlerts() {
+            const container = document.getElementById('alerts-container');
+            
+            try {
+                // Horry County zone - adjust this to your specific zone if needed
+                const response = await fetch('https://api.weather.gov/alerts/active?zone=SCZ054,SCZ056,SCZ058');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch alerts');
+                }
+
+                const data = await response.json();
+                const alerts = data.features;
+
+                if (!alerts || alerts.length === 0) {
+                    container.innerHTML = `
+                        <div class="no-alerts">
+                            <h2>✅ No Active Alerts</h2>
+                            <p>There are currently no active weather alerts for Horry County.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Sort alerts by severity
+                const severityOrder = { 'Extreme': 0, 'Severe': 1, 'Moderate': 2, 'Minor': 3, 'Unknown': 4 };
+                alerts.sort((a, b) => {
+                    const sevA = severityOrder[a.properties.severity] || 4;
+                    const sevB = severityOrder[b.properties.severity] || 4;
+                    return sevA - sevB;
+                });
+
+                container.innerHTML = alerts.map(alert => createAlertCard(alert)).join('');
+
+            } catch (error) {
+                console.error('Error loading alerts:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        <h2>⚠️ Error Loading Alerts</h2>
+                        <p>Unable to load weather alerts at this time. Please try again later or visit <a href="https://weather.gov" target="_blank">weather.gov</a> directly.</p>
+                        <p style="margin-top: 10px; font-size: 14px;">Error: ${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Load alerts when page loads
+        loadAlerts();
+
+        // Refresh alerts every 5 minutes
+        setInterval(loadAlerts, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
